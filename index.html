@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERFECTO — Redefine Elegance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --gold-dark: #9a7a2e;
+            --black: #0a0a0a;
+            --dark: #111111;
+            --dark-2: #1a1a1a;
+            --dark-3: #222222;
+            --white: #f5f0eb;
+            --white-pure: #ffffff;
+            --gray: #888888;
+            --gray-light: #aaaaaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transition: transform 0.15s ease, background 0.15s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(2);
+            background: rgba(201, 168, 76, 0.15);
+        }
+
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ===== PRELOADER ===== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 15px;
+            color: var(--gold);
+            animation: preloaderPulse 1.5s ease-in-out infinite;
+        }
+
+        .preloader-bar {
+            width: 200px;
+            height: 1px;
+            background: var(--dark-3);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preloader-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--gold);
+            animation: preloaderBar 2.5s ease forwards;
+        }
+
+        @keyframes preloaderPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes preloaderBar {
+            to { width: 100%; }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10000;
+            transition: all 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 60px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: var(--gold);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-logo span {
+            font-weight: 400;
+            font-style: italic;
+            font-size: 0.7em;
+            color: var(--gold-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 10px 30px;
+            border: 1px solid var(--gold);
+            color: var(--gold) !important;
+            font-size: 0.7rem !important;
+            letter-spacing: 3px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold) !important;
+            color: var(--black) !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+            50% { opacity: 0.6; transform: translateY(-100px) scale(1.5); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 3s forwards;
+            font-weight: 300;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: 20px;
+            line-height: 1;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: heroTitleReveal 1.5s ease 3.2s forwards;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark), var(--gold));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: heroTitleReveal 1.5s ease 3.2s forwards, goldShimmer 5s ease-in-out infinite 4.5s;
+        }
+
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gray-light);
+            letter-spacing: 5px;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 3.6s forwards;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease 3.9s forwards;
+        }
+
+        .btn-primary {
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 168, 76, 0.3);
+        }
+
+        .btn-secondary {
+            padding: 18px 50px;
+            background: transparent;
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 168, 76, 0.2);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 4.2s forwards;
+        }
+
+        .hero-scroll span {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: var(--dark-3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--gold);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+            0% { top: -50%; }
+            100% { top: 100%; }
+        }
+
+        /* Bottle silhouette */
+        .hero-bottle {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 500px;
+            opacity: 0;
+            animation: bottleReveal 2s ease 3.5s forwards;
+        }
+
+        .bottle-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
+
+        .bottle-svg {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes bottleReveal {
+            from { opacity: 0; transform: translateY(-45%) scale(0.9); }
+            to { opacity: 1; transform: translateY(-50%) scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroTitleReveal {
+            from { opacity: 0; transform: translateY(50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== FLOATING ELEMENTS ===== */
+        .floating-line-left {
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        .floating-line-right {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        /* ===== SECTION STYLES ===== */
+        section {
+            padding: 120px 60px;
+            position: relative;
+        }
+
+        .section-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .section-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--gray-light);
+            max-width: 500px;
+            font-weight: 300;
+        }
+
+        /* ===== ABOUT / STORY ===== */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            background: var(--dark);
+        }
+
+        .about-visual {
+            position: relative;
+            height: 600px;
+        }
+
+        .about-image-frame {
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image-frame .bottle-illustration {
+            width: 200px;
+            opacity: 0.8;
+        }
+
+        .about-frame-decoration {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            pointer-events: none;
+        }
+
+        .about-stats {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            background: var(--gold);
+            color: var(--black);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .about-stats .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        .about-stats .stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* ===== FRAGRANCE NOTES ===== */
+        .notes {
+            background: var(--black);
+            text-align: center;
+        }
+
+        .notes-header {
+            margin-bottom: 80px;
+        }
+
+        .notes-header .section-label,
+        .notes-header .section-title,
+        .notes-header .section-desc {
+            text-align: center;
+        }
+
+        .notes-header .section-label {
+            justify-content: center;
+        }
+
+        .notes-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .note-card {
+            padding: 60px 40px;
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background: rgba(26, 26, 26, 0.3);
+        }
+
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .note-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .note-card:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .note-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--gold);
+            transition: all 0.5s ease;
+        }
+
+        .note-card:hover .note-icon {
+            background: rgba(201, 168, 76, 0.1);
+            transform: scale(1.1);
+        }
+
+        .note-type {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .note-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .note-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray);
+            font-weight: 300;
+        }
+
+        /* ===== COLLECTION ===== */
+        .collection {
+            background: var(--dark);
+            overflow: hidden;
+        }
+
+        .collection-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .collection-header .section-label {
+            justify-content: center;
+        }
+
+        .collection-header .section-desc {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-2);
+            border: 1px solid rgba(201, 168, 76, 0.05);
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            border-color: rgba(201, 168, 76, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, var(--dark-2), transparent);
+        }
+
+        .product-bottle-icon {
+            font-size: 5rem;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .product-bottle-icon {
+            opacity: 0.6;
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 30px;
+        }
+
+        .product-category {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .product-price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ===== EXPERIENCE / VIDEO ===== */
+        .experience {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(ellipse at center, rgba(201, 168, 76, 0.05) 0%, transparent 60%),
+                var(--black);
+            position: relative;
+        }
+
+        .experience-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .play-button {
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .play-button::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 50%;
+            animation: playPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes playPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0; }
+        }
+
+        .play-button:hover {
+            background: rgba(201, 168, 76, 0.1);
+            transform: scale(1.1);
+        }
+
+        .play-triangle {
+            width: 0;
+            height: 0;
+            border-left: 22px solid var(--gold);
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            margin-left: 6px;
+        }
+
+        .experience h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .experience h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .experience p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--gray);
+            letter-spacing: 3px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .testimonials-header {
+            margin-bottom: 80px;
+        }
+
+        .testimonials-header .section-label {
+            justify-content: center;
+        }
+
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .testimonial-item.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--white);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            color: var(--gold);
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .testimonial-info h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .testimonial-info p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .testimonial-dot {
+            width: 30px;
+            height: 2px;
+            background: var(--dark-3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--gold);
+            width: 50px;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: var(--black);
+            text-align: center;
+            padding: 120px 60px;
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 80px 60px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            position: relative;
+        }
+
+        .newsletter-inner::before,
+        .newsletter-inner::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: var(--gold);
+        }
+
+        .newsletter-inner::before {
+            top: -1px;
+            left: -1px;
+            border-top: 2px solid var(--gold);
+            border-left: 2px solid var(--gold);
+        }
+
+        .newsletter-inner::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid var(--gold);
+            border-right: 2px solid var(--gold);
+        }
+
+        .newsletter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 18px 25px;
+            background: var(--dark-2);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-right: none;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--gray);
+            letter-spacing: 2px;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--gold);
+        }
+
+        .newsletter-form button {
+            padding: 18px 35px;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--gold-light);
+        }
+
+        /* ===== INSTAGRAM FEED ===== */
+        .instagram {
+            background: var(--dark);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .instagram-header {
+            margin-bottom: 50px;
+            padding: 0 60px;
+        }
+
+        .instagram-header .section-label {
+            justify-content: center;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
+        }
+
+        .insta-item {
+            aspect-ratio: 1;
+            background: var(--dark-2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .insta-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(201, 168, 76, 0.05),
+                rgba(201, 168, 76, 0.15)
+            );
+        }
+
+        .insta-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(201, 168, 76, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .insta-item:hover .insta-overlay {
+            opacity: 1;
+        }
+
+        .insta-icon {
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--black);
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .nav-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--gray);
+            max-width: 300px;
+            font-weight: 300;
+        }
+
+        .footer-col h4 {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.75rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            overflow: hidden;
+            padding: 40px 0;
+            background: var(--dark);
+            border-top: 1px solid rgba(201, 168, 76, 0.05);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.05);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(201, 168, 76, 0.15);
+            white-space: nowrap;
+            padding: 0 50px;
+            letter-spacing: 10px;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 60px;
+            background: var(--black);
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.2), transparent);
+        }
+
+        .divider-diamond {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            margin: 0 20px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 5rem; }
+            .hero-bottle { display: none; }
+            .about { grid-template-columns: 1fr; gap: 40px; }
+            .notes-grid { grid-template-columns: repeat(2, 1fr); }
+            .collection-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 80px 30px; }
+            .navbar { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .hero-title { font-size: 3.5rem; letter-spacing: 10px; }
+            .hero-subtitle { font-size: 0.8rem; letter-spacing: 6px; }
+            .hero-tagline { font-size: 1.1rem; }
+            .hero-cta-group { flex-direction: column; align-items: center; }
+            .section-title { font-size: 2.5rem; }
+            .notes-grid { grid-template-columns: 1fr; }
+            .collection-grid { grid-template-columns: 1fr; }
+            .instagram-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-inner { padding: 50px 30px; }
+            .cursor, .cursor-dot { display: none; }
+            .testimonial-quote { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.5rem; letter-spacing: 5px; }
+            .section-title { font-size: 2rem; }
+            .experience h2 { font-size: 2rem; }
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+
+        .mobile-menu-links a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--gold);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* ===== SPECIAL BADGE ===== */
+        .limited-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">PERFECTO</div>
+        <div class="preloader-bar"></div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-logo">PERFECTO <span>™</span></a>
+        <ul class="nav-links">
+            <li><a href="#story">Story</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#subscribe" class="nav-cta">Shop Now</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+        <ul class="mobile-menu-links">
+            <li><a href="#story" onclick="toggleMobileMenu()">Story</a></li>
+            <li><a href="#notes" onclick="toggleMobileMenu()">Notes</a></li>
+            <li><a href="#collection" onclick="toggleMobileMenu()">Collection</a></li>
+            <li><a href="#experience" onclick="toggleMobileMenu()">Experience</a></li>
+            <li><a href="#subscribe" onclick="toggleMobileMenu()">Shop Now</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="floating-line-left"></div>
+        <div class="floating-line-right"></div>
+        
+        <div class="hero-content">
+            <p class="hero-subtitle">Introducing the Signature</p>
+            <h1 class="hero-title">PERFECTO</h1>
+            <p class="hero-tagline">Where Elegance Meets Eternity</p>
+            <div class="hero-cta-group">
+                <a href="#collection" class="btn-primary">Discover Now</a>
+                <a href="#experience" class="btn-secondary">Watch Film</a>
+            </div>
+        </div>
+
+        <!-- Bottle Visual -->
+        <div class="hero-bottle">
+            <div class="bottle-glow"></div>
+            <svg class="bottle-svg" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bottle Cap -->
+                <rect x="75" y="30" width="50" height="40" rx="3" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+                <rect x="80" y="15" width="40" height="20" rx="2" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+                <!-- Bottle Neck -->
+                <path d="M85 70 L85 110 L60 140 L60 350 Q60 365 75 365 L125 365 Q140 365 140 350 L140 140 L115 110 L115 70" 
+                      fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+                <!-- Label -->
+                <rect x="70" y="200" width="60" height="80" rx="2" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+                <text x="100" y="235" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-family="Playfair Display" font-size="8" letter-spacing="3">PERFECTO</text>
+                <line x1="80" y1="245" x2="120" y2="245" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+                <text x="100" y="260" text-anchor="middle" fill="rgba(201,168,76,0.3)" font-family="Cormorant Garamond" font-size="6" font-style="italic">Eau de Parfum</text>
+                <!-- Liquid Level -->
+                <path d="M62 220 L138 220 L138 348 Q138 363 125 363 L75 363 Q62 363 62 348 Z" 
+                      fill="rgba(201,168,76,0.08)"/>
+                <!-- Reflection -->
+                <line x1="75" y1="150" x2="75" y2="340" stroke="rgba(255,255,255,0.03)" stroke-width="8"/>
+            </svg>
+        </div>
+
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span class="marquee-item">PERFECTO</span>
+            <span class="marquee-item">✦ LUXURY</span>
+            <span class="marquee-item">ELEGANCE</span>
+            <span class="marquee-item">✦ TIMELESS</span>
+            <span class="marquee-item">PERFECTO</span>
+            <span class="marquee-item">✦ SIGNATURE</span>
+            <span class="marquee-item">PERFECTO</span>
+            <span class="marquee-item">✦ LUXURY</span>
+            <span class="marquee-item">ELEGANCE</span>
+            <span class="marquee-item">✦ TIMELESS</span>
+            <span class="marquee-item">PERFECTO</span>
+            <span class="marquee-item">✦ SIGNATURE</span>
+        </div>
+    </div>
+
+    <!-- ABOUT / STORY -->
+    <section class="about" id="story">
+        <div class="about-visual reveal">
+            <div class="about-image-frame">
+                <svg class="bottle-illustration" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" width="180">
+                    <defs>
+                        <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(201,168,76,0.3)"/>
+                            <stop offset="100%" style="stop-color:rgba(201,168,76,0.1)"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="75" y="30" width="50" height="40" rx="3" fill="url(#bottleGrad)" stroke="rgba(201,168,76,0.5)" stroke-width="1"/>
+                    <rect x="82" y="15" width="36" height="20" rx="2" fill="rgba(201,168,76,0.2)" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+                    <path d="M85 70 L85 110 L60 140 L60 350 Q60 365 75 365 L125 365 Q140 365 140 350 L140 140 L115 110 L115 70" 
+                          fill="url(#bottleGrad)" stroke="rgba(201,168,76,0.5)" stroke-width="1"/>
+                    <path d="M62 200 L138 200 L138 348 Q138 363 125 363 L75 363 Q62 363 62 348 Z" 
+                          fill="rgba(201,168,76,0.15)"/>
+                    <text x="100" y="245" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-family="Playfair Display" font-size="10" letter-spacing="3" font-weight="700">PERFECTO</text>
+                </svg>
+            </div>
+            <div class="about-frame-decoration"></div>
+            <div class="about-stats">
+                <div class="stat-number">1987</div>
+                <div class="stat-label">Year Founded</div>
+            </div>
+        </div>
+        <div class="about-text">
+            <div class="section-label reveal">Our Story</div>
+            <h2 class="section-title reveal reveal-delay-1">A Legacy of <em>Timeless</em> Craftsmanship</h2>
+            <p class="section-desc reveal reveal-delay-2">
+                Born from the ancient perfumery traditions of Grasse, France, Perfecto embodies 
+                the art of olfactory excellence. Each bottle is a masterpiece — a symphony of rare 
+                ingredients sourced from the world's most exotic locations.
+            </p>
+            <br>
+            <p class="section-desc reveal reveal-delay-3">
+                Our master perfumers spend years crafting each fragrance, blending tradition 
+                with innovation to create scents that transcend time and captivate the senses. 
+                Perfecto is not just a fragrance — it is a statement.
+            </p>
+            <br><br>
+            <a href="#collection" class="btn-primary reveal reveal-delay-4">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- FRAGRANCE NOTES -->
+    <section class="notes" id="notes">
+        <div class="notes-header">
+            <div class="section-label reveal">The Composition</div>
+            <h2 class="section-title reveal reveal-delay-1">Fragrance <em>Notes</em></h2>
+            <p class="section-desc reveal reveal-delay-2">
+                A meticulously crafted pyramid of scents that unfolds throughout the day, 
+                revealing deeper layers of sophistication.
+            </p>
+        </div>
+        <div class="notes-grid">
+            <div class="note-card reveal">
+                <div class="note-icon">✿</div>
+                <div class="note-type">Top Notes</div>
+                <h3 class="note-name">Bergamot & Rose</h3>
+                <p class="note-description">
+                    A radiant opening of Calabrian bergamot kissed by morning dew, 
+                    intertwined with the delicate petals of Damascena rose.
+                </p>
+            </div>
+            <div class="note-card reveal reveal-delay-1">
+                <div class="note-icon">❋</div>
+                <div class="note-type">Heart Notes</div>
+                <h3 class="note-name">Oud & Jasmine</h3>
+                <p class="note-description">
+                    The heart reveals precious Indonesian oud, enriched by the 
+                    intoxicating sweetness of Indian jasmine sambac.
+                </p>
+            </div>
+            <div class="note-card reveal reveal-delay-2">
+                <div class="note-icon">◆</div>
+                <div class="note-type">Base Notes</div>
+                <h3 class="note-name">Amber & Musk</h3>
+                <p class="note-description">
+                    A warm, sensual foundation of golden amber and white musk, 
+                    leaving an unforgettable trail of elegance.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE 2 -->
+    <div class="marquee-section">
+        <div class="marquee-track" style="animation-direction: reverse;">
+            <span class="marquee-item">✦ BERGAMOT</span>
+            <span class="marquee-item">ROSE</span>
+            <span class="marquee-item">✦ OUD</span>
+            <span class="marquee-item">JASMINE</span>
+            <span class="marquee-item">✦ AMBER</span>
+            <span class="marquee-item">MUSK</span>
+            <span class="marquee-item">✦ BERGAMOT</span>
+            <span class="marquee-item">ROSE</span>
+            <span class="marquee-item">✦ OUD</span>
+            <span class="marquee-item">JASMINE</span>
+            <span class="marquee-item">✦ AMBER</span>
+            <span class="marquee-item">MUSK</span>
+        </div>
+    </div>
+
+    <!-- COLLECTION -->
+    <section class="collection" id="collection">
+        <div class="collection-header">
+            <div class="section-label reveal">The Collection</div>
+            <h2 class="section-title reveal reveal-delay-1">Signature <em>Fragrances</em></h2>
+            <p class="section-desc reveal reveal-delay-2">
+                Three distinctive expressions of luxury, each telling its own story.
+            </p>
+        </div>
+        <div class="collection-grid">
+            <div class="product-card reveal">
+                <div class="product-image">
+                    <div class="product-bottle-icon">🖤</div>
+                    <div class="limited-badge">Bestseller</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Eau de Parfum</div>
+                    <h3 class="product-name">Perfecto Noir</h3>
+                    <div class="product-price">$285.00</div>
+                    <button class="product-btn">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card reveal reveal-delay-1">
+                <div class="product-image">
+                    <div class="product-bottle-icon">✦</div>
+                    <div class="limited-badge">Limited Edition</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Eau de Parfum Intense</div>
+                    <h3 class="product-name">Perfecto Gold</h3>
+                    <div class="product-price">$350.00</div>
+                    <button class="product-btn">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card reveal reveal-delay-2">
+                <div class="product-image">
+                    <div class="product-bottle-icon">◇</div>
+                    <div class="limited-badge">New</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Eau de Toilette</div>
+                    <h3 class="product-name">Perfecto Blanc</h3>
+                    <div class="product-price">$220.00</div>
+                    <button class="product-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="experience" id="experience">
+        <div class="experience-content reveal">
+            <div class="play-button" onclick="playVideo()">
+                <div class="play-triangle"></div>
+            </div>
+            <h2>The Art of <em>Perfection</em></h2>
+            <p>Watch the making of our signature fragrance</p>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-header">
+            <div class="section-label reveal">Testimonials</div>
+            <h2 class="section-title reveal reveal-delay-1">What They <em>Say</em></h2>
+        </div>
+        <div class="testimonials-slider reveal reveal-delay-2">
+            <div class="testimonial-item active" data-index="0">
+                <p class="testimonial-quote">
+                    Perfecto is unlike anything I've ever worn. It's not just a fragrance — 
+                    it's an experience that lingers in the memory long after the scent fades.
+                </p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">SA</div>
+                    <div class="testimonial-info">
+                        <h4>Sophia Armani</h4>
+                        <p>Fashion Editor, Vogue</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-item" data-index="1">
+                <p class="testimonial-quote">
+                    The craftsmanship behind each bottle is extraordinary. Perfecto Gold 
+                    has become my signature — it speaks before I do.
+                </p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">JR</div>
+                    <div class="testimonial-info">
+                        <h4>James Rothwell</h4>
+                        <p>Creative Director, Luxe</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-item" data-index="2">
+                <p class="testimonial-quote">
+                    Every note, every layer reveals something new. Perfecto is pure artistry 
+                    distilled into a bottle. Absolutely magnificent.
+                </p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">EM</div>
+                    <div class="testimonial-info">
+                        <h4>Elena Moretti</h4>
+                        <p>Perfume Critic, Scent & Style</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-dots">
+                <div class="testimonial-dot active" onclick="goToTestimonial(0)"></div>
+                <div class="testimonial-dot" onclick="goToTestimonial(1)"></div>
+                <div class="testimonial-dot" onclick="goToTestimonial(2)"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter" id="subscribe">
+        <div class="newsletter-inner reveal">
+            <div class="section-label" style="justify-content:center; margin-bottom: 20px;">Exclusive Access</div>
+            <h2>Join the <em style="color:var(--gold); font-style:italic;">Inner Circle</em></h2>
+            <p>Be the first to discover new fragrances, limited editions, and exclusive offers.</p>
+            <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="instagram">
+        <div class="instagram-header">
+            <div class="section-label reveal">Follow Us</div>
+            <h2 class="section-title reveal reveal-delay-1">@perfecto</h2>
+        </div>
+        <div class="instagram-grid">
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+            <div class="insta-item"><div class="insta-overlay"><span class="insta-icon">♡</span></div></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">PERFECTO <span>™</span></a>
+                <p>
+                    Crafting timeless fragrances since 1987. Each scent is a journey through 
+                    the world's most precious ingredients.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-link">Fb</a>
+                    <a href="#" class="social-link">Ig</a>
+                    <a href="#" class="social-link">Tw</a>
+                    <a href="#" class="social-link">Pt</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">All Fragrances</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Gift Sets</a></li>
+                    <li><a href="#">Limited Editions</a></li>
+                    <li><a href="#">Accessories</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Craftsmanship</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Store Locator</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Perfecto. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 2800);
+        });
+
+        // ===== CUSTOM CURSOR =====
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .play-button, .product-card, .testimonial-dot').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // ===== NAVBAR SCROLL =====
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== PARTICLES =====
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (5 + Math.random() * 8) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== TESTIMONIALS SLIDER =====
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-item');
+        const dots = document.querySelectorAll('.testimonial-dot');
+
+        function goToTestimonial(index) {
+            testimonials[currentTestimonial].classList.remove('active');
+            dots[currentTestimonial].classList.remove('active');
+            currentTestimonial = index;
+            testimonials[currentTestimonial].classList.add('active');
+            dots[currentTestimonial].classList.add('active');
+        }
+
+        setInterval(() => {
+            goToTestimonial((currentTestimonial + 1) % testimonials.length);
+        }, 5000);
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== PLAY VIDEO =====
+        function playVideo() {
+            alert('🎬 Video player would open here.\nImagine a cinematic brand film showcasing the art of perfumery.');
+        }
+
+        // ===== NEWSLETTER =====
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const btn = e.target.querySelector('button');
+            btn.textContent = '✓ Subscribed';
+            btn.style.background = '#2a6e3f';
+            input.value = '';
+            setTimeout(() => {
+                btn.textContent = 'Subscribe';
+                btn.style.background = '';
+            }, 3000);
+        }
+
+        // ===== PARALLAX EFFECT ON HERO =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroContent = document.querySelector('.hero-content');
+            const heroBottle = document.querySelector('.hero-bottle');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+            if (heroBottle && scrolled < window.innerHeight) {
+                heroBottle.style.transform = `translateY(calc(-50% + ${scrolled * 0.15}px))`;
+            }
+        });
+
+        // ===== ADD TO CART INTERACTION =====
+        document.querySelectorAll('.product-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const original = this.textContent;
+                this.textContent = '✓ Added to Cart';
+                this.style.background = 'var(--gold)';
+                this.style.color = 'var(--black)';
+                setTimeout(() => {
+                    this.textContent = original;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
